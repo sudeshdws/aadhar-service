@@ -110,7 +110,7 @@ public class UserAadharControllerTest {
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
         userAadhar.setDateOfBirth("2020-07-14");
-
+        userAadhar.setCity("Washington");
         return userAadhar;
     }
 
@@ -121,6 +121,7 @@ public class UserAadharControllerTest {
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
         userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setCity("Washington");
 
         return userAadhar;
     }
@@ -133,6 +134,7 @@ public class UserAadharControllerTest {
         userAadhar1.setLastName("Doe");
         userAadhar1.setContactNumber("4343434343");
         userAadhar1.setDateOfBirth("2020-07-14");
+        userAadhar1.setCity("Washington");
 
         UserAadhar userAadhar2 = new UserAadhar();
         userAadhar2.setId(2);
@@ -140,7 +142,7 @@ public class UserAadharControllerTest {
         userAadhar2.setLastName("Doe");
         userAadhar2.setContactNumber("4343434343");
         userAadhar2.setDateOfBirth("2020-07-14");
-
+        userAadhar2.setCity("Washington");
         list.add(userAadhar1);
         list.add(userAadhar2);
         return list;

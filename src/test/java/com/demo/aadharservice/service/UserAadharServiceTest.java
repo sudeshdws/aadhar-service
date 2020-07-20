@@ -44,9 +44,7 @@ class UserAadharServiceTest {
 
         Assert.assertEquals(request.getFirstName(), userAadharResp.getFirstName());
         Assert.assertEquals(request.getLastName(), userAadharResp.getLastName());
-        //https://dzone.com/articles/mockito-mock-vs-spy-in-spring-boot-tests
-        //https://www.freecodecamp.org/news/unit-testing-services-endpoints-and-repositories-in-spring-boot-4b7d9dc2b772/
-    }
+   }
 
     @Test
     void updateUserInfoToAdharTest() {
@@ -143,6 +141,7 @@ class UserAadharServiceTest {
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
         userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setCity("Washington");
         return userAadhar;
     }
 
@@ -164,6 +163,7 @@ class UserAadharServiceTest {
         userAadhar1.setLastName("Doe");
         userAadhar1.setContactNumber("4343434343");
         userAadhar1.setDateOfBirth("2020-07-14");
+        userAadhar1.setCity("Washington");
 
         UserAadhar userAadhar2 = new UserAadhar();
         userAadhar2.setId(2);
@@ -171,6 +171,7 @@ class UserAadharServiceTest {
         userAadhar2.setLastName("Doe");
         userAadhar2.setContactNumber("4343434343");
         userAadhar2.setDateOfBirth("2020-07-14");
+        userAadhar2.setCity("Washington");
 
         list.add(userAadhar1);
         list.add(userAadhar2);

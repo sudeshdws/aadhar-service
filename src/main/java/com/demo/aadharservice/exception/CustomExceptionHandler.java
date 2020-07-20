@@ -35,7 +35,7 @@ public class CustomExceptionHandler {
     public Date validateDate(String date) {
         Date parsedDate;
         SimpleDateFormat sdf = new SimpleDateFormat(ISO_DATETIME_FORMAT);
-        try {//parse the date to ISODateTime format
+        try {
             parsedDate = sdf.parse(date);
         } catch (ParseException e) {
             //log.error(e.getMessage(), e);
@@ -96,7 +96,12 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(ContactValidationException.class)
+    public final ResponseEntity<Object> contactValidationException(ContactValidationException ex) {
+        FieldErrorMessage errorDetails = new FieldErrorMessage("ContactNumber"
+                ,ex.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 
 }
 

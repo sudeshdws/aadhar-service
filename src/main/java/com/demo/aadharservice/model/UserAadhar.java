@@ -2,8 +2,6 @@ package com.demo.aadharservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.ToString;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,12 +10,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
-
 @Entity
 public class UserAadhar {
 
     public UserAadhar() {
-
     }
 
     @Id
@@ -43,7 +39,10 @@ public class UserAadhar {
     @JsonProperty("ContactNumber")
     private String contactNumber;
 
-
+    @Size(min=1,max=50)
+    @NotEmpty(message = "city must not be empty")
+    @JsonProperty("City")
+    private String city;
 
 
 
