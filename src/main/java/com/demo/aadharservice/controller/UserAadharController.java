@@ -1,7 +1,7 @@
 package com.demo.aadharservice.controller;
 
 import com.demo.aadharservice.api.UserAadharControllerAPI;
-import com.demo.aadharservice.model.UserAadhar;
+import com.demo.aadharservice.model.User;
 import com.demo.aadharservice.service.UserAadharService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,33 +18,35 @@ public class UserAadharController implements UserAadharControllerAPI {
     @Autowired
     UserAadharService userAadharService;
 
-    public ResponseEntity<UserAadhar> enrollUserInfoToAdhar(@Valid UserAadhar userAadhar) {
+    @Override
+    public ResponseEntity<User> enrollUserInfoToAdhar(@Valid User userAadhar) {
 
         return new ResponseEntity<>(userAadharService.enrollUserInfoToAdhar(userAadhar),
                 HttpStatus.CREATED);
     }
 
-    public ResponseEntity<UserAadhar> updateUserInfoToAdhar(@Valid UserAadhar userAadhar) {
+    @Override
+    public ResponseEntity<User> updateUserInfoToAdhar(@Valid User userAadhar) {
         return new ResponseEntity<>(userAadharService.updateUserInfoToAdhar(userAadhar),
                 HttpStatus.OK);
     }
 
-
-    public ResponseEntity<Optional<UserAadhar>> getUserAadharInfo(@Valid Long id) {
+    @Override
+    public ResponseEntity<Optional<User>> getUserAadharInfo(@Valid Long id) {
         return new ResponseEntity<>(userAadharService.getUserAadharInfo(id),
                 HttpStatus.OK);
     }
 
-
+    @Override
     public ResponseEntity<?>   deleteUserAadharInfo(@Valid Long id) {
         userAadharService.deleteUserAadharInfo(id);
-        return new ResponseEntity<UserAadhar>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
-
-    public ResponseEntity<List<UserAadhar>> searchUserAadharInfo(Long id, String firstName, String lastName,
-                                                                     String dateOfBirth) {
-        List<UserAadhar>  userDataList = userAadharService.searchUserAadharInfo(id,firstName,lastName,dateOfBirth);
+    @Override
+    public ResponseEntity<List<User>> searchUserAadharInfo(Long id, String firstName, String lastName,
+                                                           String dateOfBirth) {
+        List<User>  userDataList = userAadharService.searchUserAadharInfo(id,firstName,lastName,dateOfBirth);
         return ResponseEntity.ok(userDataList);
 
        }

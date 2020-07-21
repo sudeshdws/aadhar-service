@@ -1,14 +1,16 @@
 package com.demo.aadharservice.exception;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-class ErrorMessage {
-private String status;
-private  String message;
+@Getter
+@Setter
+public class ErrorMessage {
+    private String status;
+    private String message;
 
-  public ErrorMessage(String status, String message) {
-    this.status = status;
-    this.message = message;
-  }
+    public ErrorMessage(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }

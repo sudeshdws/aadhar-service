@@ -1,7 +1,8 @@
 package com.demo.aadharservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,11 +10,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Data
+@Setter
+@Getter
 @Entity
-public class UserAadhar {
+public class User {
 
-    public UserAadhar() {
+    public User() {
     }
 
     @Id
@@ -34,7 +36,7 @@ public class UserAadhar {
     @JsonProperty("DateOfBirth")
     private String dateOfBirth;
 
-    @Size(min=1,max=10)
+    @Size(min=1,max=11)
     @NotEmpty(message = "Contact number must not be empty")
     @JsonProperty("ContactNumber")
     private String contactNumber;

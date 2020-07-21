@@ -3,7 +3,7 @@ package com.demo.aadharservice.util;
 import com.demo.aadharservice.exception.ContactValidationException;
 import com.demo.aadharservice.exception.CustomValidationException;
 import com.demo.aadharservice.exception.DateParseException;
-import com.demo.aadharservice.model.UserAadhar;
+import com.demo.aadharservice.model.User;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.validator.GenericValidator;
 import java.util.function.Predicate;
@@ -14,14 +14,13 @@ import java.util.regex.Pattern;
 public class Utiilty {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DATE_IS_NOT_VALID = "Please provide valid date : yyyy-MM-dd";
-    private static final String USER_ALREADY_REGISTERED = "User is already registered";
     public static final String USER_ID_NOT_FOUND = "User ID not found";
     private static final String SPECIAL_CHAR_NOT_ALLOWED = "Special character is not allowed";
     private static final String CONTACT_NUMBER_IS_NOT_VALID = "Contact number is not valid";
-    ///private Pattern pattern = Pattern.compile("[^A-Za-z0-9]");
+
     private Pattern pattern = Pattern.compile("[^A-Za-z]");
 
-    public void validateRequest(UserAadhar userAadhar) {
+    public void validateRequest(User userAadhar) {
 
         Matcher matcher;
         matcher = pattern.matcher(userAadhar.getFirstName());

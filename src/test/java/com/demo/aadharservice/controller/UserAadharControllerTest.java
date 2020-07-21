@@ -1,6 +1,6 @@
 package com.demo.aadharservice.controller;
 
-import com.demo.aadharservice.model.UserAadhar;
+import com.demo.aadharservice.model.User;
 import com.demo.aadharservice.service.UserAadharService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,12 +33,12 @@ public class UserAadharControllerTest {
     @Test
     public void enrollUserInfoToAdharTest() {
 
-        UserAadhar response = userAadharResponse();
-        UserAadhar request = userAadharRequest();
+        User response = userAadharResponse();
+        User request = userAadharRequest();
 
-        Mockito.when(userAadharService.enrollUserInfoToAdhar(Mockito.any(UserAadhar.class)))
+        Mockito.when(userAadharService.enrollUserInfoToAdhar(Mockito.any(User.class)))
                 .thenReturn(response);
-        ResponseEntity<UserAadhar> actual = userAadharController.
+        ResponseEntity<User> actual = userAadharController.
                 enrollUserInfoToAdhar(request);
 
         Assert.assertEquals(201, actual.getStatusCodeValue());
@@ -49,11 +49,11 @@ public class UserAadharControllerTest {
     @Test
     public void updateUserInfoToAdharTest() {
 
-        UserAadhar response = userAadharResponse();
-        UserAadhar request = userAadharRequest();
+        User response = userAadharResponse();
+        User request = userAadharRequest();
         Mockito.when(userAadharService.updateUserInfoToAdhar(request))
                 .thenReturn(response);
-        ResponseEntity<UserAadhar> actual = userAadharController.
+        ResponseEntity<User> actual = userAadharController.
                 updateUserInfoToAdhar(request);
 
         Assert.assertEquals(200, actual.getStatusCodeValue());
@@ -62,12 +62,11 @@ public class UserAadharControllerTest {
     @Test
     public void getUserAadharInfoTest() {
 
-        UserAadhar response = userAadharResponse();
-
+        User response = userAadharResponse();
         Long val = 20L;
         Mockito.when(userAadharService.getUserAadharInfo(val))
                 .thenReturn(Optional.of(response));
-        ResponseEntity<Optional<UserAadhar>> actual = userAadharController.
+        ResponseEntity<Optional<User>> actual = userAadharController.
                 getUserAadharInfo(val);
 
         Assert.assertEquals(200, actual.getStatusCodeValue());
@@ -77,7 +76,6 @@ public class UserAadharControllerTest {
     @Test
     public void deleteUserAadharInfoTest() {
         Long val = 20L;
-
         Mockito.doNothing().when(userAadharService).deleteUserAadharInfo(val);
         ResponseEntity<?> actual = userAadharController.deleteUserAadharInfo(val);
 
@@ -92,10 +90,10 @@ public class UserAadharControllerTest {
         String firstName = "John";
         String lastName = "";
         String dateOfBirth = "";
-        List<UserAadhar> response = userAadharResponseList();
+        List<User> response = userAadharResponseList();
         Mockito.when(userAadharService.searchUserAadharInfo(id, firstName, lastName, dateOfBirth))
                 .thenReturn(response);
-        ResponseEntity<List<UserAadhar>> actual = userAadharController.
+        ResponseEntity<List<User>> actual = userAadharController.
                 searchUserAadharInfo(id, firstName, lastName, dateOfBirth);
 
         Assert.assertEquals(200, actual.getStatusCodeValue());
@@ -103,8 +101,8 @@ public class UserAadharControllerTest {
     }
 
 
-    private UserAadhar userAadharResponse() {
-        UserAadhar userAadhar = new UserAadhar();
+    private User userAadharResponse() {
+        User userAadhar = new User();
         userAadhar.setId(1);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
@@ -114,8 +112,8 @@ public class UserAadharControllerTest {
         return userAadhar;
     }
 
-    private UserAadhar userAadharRequest() {
-        UserAadhar userAadhar = new UserAadhar();
+    private User userAadharRequest() {
+        User userAadhar = new User();
         userAadhar.setId(2);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
@@ -126,9 +124,9 @@ public class UserAadharControllerTest {
         return userAadhar;
     }
 
-    private List<UserAadhar> userAadharResponseList() {
-        List<UserAadhar> list = new ArrayList<>();
-        UserAadhar userAadhar1 = new UserAadhar();
+    private List<User> userAadharResponseList() {
+        List<User> list = new ArrayList<>();
+        User userAadhar1 = new User();
         userAadhar1.setId(1);
         userAadhar1.setFirstName("John");
         userAadhar1.setLastName("Doe");
@@ -136,7 +134,7 @@ public class UserAadharControllerTest {
         userAadhar1.setDateOfBirth("2020-07-14");
         userAadhar1.setCity("Washington");
 
-        UserAadhar userAadhar2 = new UserAadhar();
+        User userAadhar2 = new User();
         userAadhar2.setId(2);
         userAadhar2.setFirstName("John");
         userAadhar2.setLastName("Doe");

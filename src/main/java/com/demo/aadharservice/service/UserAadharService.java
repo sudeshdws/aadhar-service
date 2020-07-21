@@ -1,7 +1,7 @@
 package com.demo.aadharservice.service;
 
 import com.demo.aadharservice.exception.UserNotFoundException;
-import com.demo.aadharservice.model.UserAadhar;
+import com.demo.aadharservice.model.User;
 import com.demo.aadharservice.repository.UserAadharRepository;
 import com.demo.aadharservice.util.Utiilty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class UserAadharService {
         this.userAadharRepository = userAadharRepository;
     }
 
-    public UserAadhar enrollUserInfoToAdhar(UserAadhar userAadhar) {
+    public User enrollUserInfoToAdhar(User userAadhar) {
         Utiilty.validateRequest(userAadhar);
         return userAadharRepository.save(userAadhar);
 
     }
 
-    public UserAadhar updateUserInfoToAdhar(UserAadhar userAadhar) {
+    public User updateUserInfoToAdhar(User userAadhar) {
        Utiilty.validateRequest(userAadhar);
        if (userAadharRepository.existsById(userAadhar.getId()))
             userAadharRepository.save(userAadhar);
@@ -36,7 +36,7 @@ public class UserAadharService {
         return userAadhar;
     }
 
-    public Optional<UserAadhar> getUserAadharInfo(Long id) {
+    public Optional<User> getUserAadharInfo(Long id) {
         return Optional.ofNullable(userAadharRepository.findById(id).
                 orElseThrow(() -> new UserNotFoundException(Utiilty.USER_ID_NOT_FOUND)));
     }
@@ -49,7 +49,7 @@ public class UserAadharService {
     }
 
 
-    public List<UserAadhar> searchUserAadharInfo(Long id, String firstName, String lastName, String dateOfBirth) {
+    public List<User> searchUserAadharInfo(Long id, String firstName, String lastName, String dateOfBirth) {
 
         return userAadharRepository.findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(id, firstName, lastName, dateOfBirth);
     }
