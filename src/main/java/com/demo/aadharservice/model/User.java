@@ -41,8 +41,13 @@ public class User {
     @JsonProperty("ContactNumber")
     private String contactNumber;
 
+    @Size(min=1,max=200)
+    @NotEmpty(message = "Address must not be empty")
+    @JsonProperty("Address")
+    private String address;
+
     @Size(min=1,max=50)
-    @NotEmpty(message = "city must not be empty")
+    @NotEmpty(message = "City must not be empty")
     @JsonProperty("City")
     private String city;
 

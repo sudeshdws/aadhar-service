@@ -1,8 +1,6 @@
 package com.demo.aadharservice.util;
 
-import com.demo.aadharservice.exception.ContactValidationException;
-import com.demo.aadharservice.exception.CustomValidationException;
-import com.demo.aadharservice.exception.DateParseException;
+import com.demo.aadharservice.exception.*;
 import com.demo.aadharservice.model.User;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.validator.GenericValidator;
@@ -33,7 +31,7 @@ public class Utiilty {
 
         matcher = pattern.matcher(userAadhar.getCity());
         if (matcher.find())
-            throw new CustomValidationException(SPECIAL_CHAR_NOT_ALLOWED);
+            throw new CityValidationException(SPECIAL_CHAR_NOT_ALLOWED);
 
         isValidDate(userAadhar.getDateOfBirth());
         isValidContactNumber(userAadhar.getContactNumber());

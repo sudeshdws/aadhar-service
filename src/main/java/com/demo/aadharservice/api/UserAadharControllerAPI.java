@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@RequestMapping("/v1/aadhar-service")
+@RequestMapping("api/v1/aadhar-service")
 @Api(value = "aadhar-services", tags = "aadhar-services", description = "This service maintain's the aadhar record ")
 public interface UserAadharControllerAPI {
 
@@ -26,7 +26,7 @@ public interface UserAadharControllerAPI {
 
 
 
-    @ApiOperation(value = "User update aadhar information", nickname = "Update aadhar information",
+    @ApiOperation(value = "Update user aadhar information", nickname = "Update aadhar information",
             notes = " Update Aadhar information", response = User.class,tags = {"Update",})
     @ApiResponses(value = {
     @ApiResponse(code = 200, message = "User aadhar information is successfully updated", response = User.class)})

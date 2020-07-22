@@ -60,6 +60,14 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CityValidationException.class)
+    public final ResponseEntity<Object> cityValidationException(CityValidationException ex) {
+        FieldErrorMessage errorDetails = new FieldErrorMessage("City"
+                ,ex.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+
 }
 
 
