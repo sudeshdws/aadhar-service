@@ -13,6 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +30,6 @@ class UserAadharServiceTest {
     @InjectMocks
     UserAadharService userAadharService;
 
-
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -40,7 +42,6 @@ class UserAadharServiceTest {
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.save(request)).thenReturn(response);
         User userAadharResp = userAadharService.enrollUserInfoToAdhar(request);
-
         Assert.assertEquals(request.getFirstName(), userAadharResp.getFirstName());
         Assert.assertEquals(request.getLastName(), userAadharResp.getLastName());
     }
@@ -61,14 +62,12 @@ class UserAadharServiceTest {
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.findById(request.getId())).thenReturn(Optional.of(response));
         Optional<User> finalResp = userAadharService.getUserAadharInfo(request.getId());
-
         Assert.assertEquals(response.getFirstName(), finalResp.get().getFirstName());
         Assert.assertEquals(response.getLastName(), finalResp.get().getLastName());
     }
 
     @Test
     void deleteUserAadharInfoTest() {
-
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(true);
         userAadharService.deleteUserAadharInfo(request.getId());
@@ -99,7 +98,6 @@ class UserAadharServiceTest {
 
     @Test
     void deleteUserAadharInfoIfUserNotFoundTest() {
-
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
         Assertions.assertThrows(UserNotFoundException.class, () -> {
@@ -125,7 +123,6 @@ class UserAadharServiceTest {
         String firstName = "John";
         String lastName = "Doe";
         String dateOfBirth = "2020-07-14";
-
         Mockito.when(userAadharRepository.findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(
                 id, firstName, lastName, dateOfBirth)).thenReturn(responseList);
         List<User> responseLists = userAadharService.searchUserAadharInfo(id, firstName, lastName, dateOfBirth);
@@ -302,10 +299,8 @@ class UserAadharServiceTest {
         String field = "Test";
         String message = "Should be filled";
         FieldErrorMessage fieldErrorMessage = new FieldErrorMessage(field, message);
-
         fieldErrorMessage.setField(field);
         fieldErrorMessage.setMessage(message);
-
         Assert.assertEquals("Test", fieldErrorMessage.getField());
         Assert.assertEquals("Should be filled", fieldErrorMessage.getMessage());
 
@@ -321,13 +316,6 @@ class UserAadharServiceTest {
         Assert.assertEquals("Test", errorMessages.getStatus());
         Assert.assertEquals("Should be filled", errorMessages.getMessage());
     }
-
-    @Test
-    public void tstCustomExceptionHandler() {
-
-
-    }
-
 
 }
 

@@ -32,8 +32,8 @@ public class User {
     @JsonProperty("LastName")
     private String lastName;
 
-
     @JsonProperty("DateOfBirth")
+    @NotEmpty(message = "Date of birth must not be empty")
     private String dateOfBirth;
 
     @Size(min=1,max=11)

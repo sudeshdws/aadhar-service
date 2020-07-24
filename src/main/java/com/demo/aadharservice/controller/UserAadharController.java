@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,6 @@ public class UserAadharController implements UserAadharControllerAPI {
 
     @Override
     public ResponseEntity<User> enrollUserInfoToAdhar(@Valid User userAadhar) {
-
         return new ResponseEntity<>(userAadharService.enrollUserInfoToAdhar(userAadhar),
                 HttpStatus.CREATED);
     }
@@ -38,7 +38,7 @@ public class UserAadharController implements UserAadharControllerAPI {
     }
 
     @Override
-    public ResponseEntity<?>   deleteUserAadharInfo(@Valid Long id) {
+    public ResponseEntity<?> deleteUserAadharInfo(@Valid Long id) {
         userAadharService.deleteUserAadharInfo(id);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
@@ -46,8 +46,8 @@ public class UserAadharController implements UserAadharControllerAPI {
     @Override
     public ResponseEntity<List<User>> searchUserAadharInfo(Long id, String firstName, String lastName,
                                                            String dateOfBirth) {
-        List<User>  userDataList = userAadharService.searchUserAadharInfo(id,firstName,lastName,dateOfBirth);
+        List<User> userDataList = userAadharService.searchUserAadharInfo(id, firstName, lastName, dateOfBirth);
         return ResponseEntity.ok(userDataList);
 
-       }
+    }
 }

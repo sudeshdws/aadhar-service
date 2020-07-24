@@ -50,7 +50,6 @@ public class UserAadharService {
 
 
     public List<User> searchUserAadharInfo(Long id, String firstName, String lastName, String dateOfBirth) {
-
         return userAadharRepository.findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(id, firstName, lastName, dateOfBirth);
     }
 }

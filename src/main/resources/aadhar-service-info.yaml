@@ -1,0 +1,212 @@
+swagger: '2.0'
+info:
+  description: 'This service provides to maintain the user aadhar information  '
+  version: v1
+  title: 'Aadhar Service System Demo '
+  termsOfService: www.aadhardemo.com/
+  contact:
+    name: Xyz
+    url: 'http://domain:9090/api/v1/aadhar-service'
+    email: 'http://contact@aadharservice.com'
+  license:
+    name: AadharService License
+    url: 'http://www.aadharservice.com/license'
+host: 'localhost:9090'
+basePath: /
+tags:
+  - name: aadhar-services
+    description: 'This service maintain''s the aadhar record '
+schemes:
+  - http
+paths:
+  '/api/v1/aadhar-service/aadhar-delete/{aadhar-id}':
+    delete:
+      tags:
+        - Delete
+        - aadhar-services
+      summary: Delete  user aadhar information
+      description: ' Delete aadhar information of user'
+      operationId: Delete aadhar information
+      produces:
+        - application/json
+      parameters:
+        - name: aadhar-id
+          in: path
+          description: ' user aadhar-id'
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: User aadhar information is successfully deleted
+          schema:
+            $ref: '#/definitions/User'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/v1/aadhar-service/aadhar-enrollment/initiation:
+    post:
+      tags:
+        - Initiate
+        - aadhar-services
+      summary: 'User aadhar enrollment '
+      description: Generate the aadhar ID
+      operationId: Enroll aadhar information
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: userAadhar
+          description: User Aaadhar Information Request Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        '201':
+          description: Successful Enrollment of Aadhar
+          schema:
+            $ref: '#/definitions/User'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/v1/aadhar-service/aadhar-filter:
+    get:
+      tags:
+        - Search
+        - aadhar-services
+      summary: Search user aadhar information
+      description: ' Search Aadhar information'
+      operationId: Search aadhar information
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: Query for search user aadhar records
+          required: false
+          type: integer
+          format: int64
+        - name: first-name
+          in: query
+          description: Query for search user aadhar records
+          required: false
+          type: string
+        - name: last-name
+          in: query
+          description: Query for search user aadhar records
+          required: false
+          type: string
+        - name: date-of-birth
+          in: query
+          description: Query for search user aadhar records
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Retrieve user information
+          schema:
+            $ref: '#/definitions/User'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/v1/aadhar-service/aadhar-retrieve/{aadhar-id}':
+    get:
+      tags:
+        - Search
+        - aadhar-services
+      summary: Retrieve  user aadhar information
+      description: ' Retrieve aadhar information'
+      operationId: Get aadhar information
+      produces:
+        - application/json
+      parameters:
+        - name: aadhar-id
+          in: path
+          description: user aadhar-id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: User aadhar information is successfully retrieved
+          schema:
+            $ref: '#/definitions/User'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/v1/aadhar-service/aadhar-update:
+    put:
+      tags:
+        - Update
+        - aadhar-services
+      summary: Update user aadhar information
+      description: ' Update Aadhar information'
+      operationId: Update aadhar information
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: userAadhar
+          description: User Aaadhar Information Request Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: User aadhar information is successfully updated
+          schema:
+            $ref: '#/definitions/User'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+definitions:
+  Optional«User»:
+    type: object
+    properties:
+      present:
+        type: boolean
+    title: Optional«User»
+  User:
+    type: object
+    properties:
+      Address:
+        type: string
+      City:
+        type: string
+      ContactNumber:
+        type: string
+      DateOfBirth:
+        type: string
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      id:
+        type: integer
+        format: int64
+    title: User
