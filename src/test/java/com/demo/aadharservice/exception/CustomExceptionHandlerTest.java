@@ -37,26 +37,7 @@ class CustomExceptionHandlerTest {
         String message = "User ID not found";
         UserNotFoundException dateParseException = new UserNotFoundException(message);
         ResponseEntity<Object> object = customExceptionHandler.userNotFoundException(dateParseException);
-        Assertions.assertEquals(400,object.getStatusCodeValue());
+        Assertions.assertEquals(404,object.getStatusCodeValue());
 
-    }
-
-    @Test
-    void customValidationExceptionTest() {
-        String message = "First Nme not found";
-        CustomValidationException validationException = new CustomValidationException(message);
-        ResponseEntity<Object> object = customExceptionHandler.
-                                              customValidationException(validationException);
-        Assertions.assertEquals(400,object.getStatusCodeValue());
-
-    }
-
-    @Test
-    void contactValidationExceptionTest() {
-        String message = "First Nme not found";
-        ContactValidationException contactValidationException = new ContactValidationException(message);
-        ResponseEntity<Object> object = customExceptionHandler.
-                contactValidationException(contactValidationException);
-        Assertions.assertEquals(400,object.getStatusCodeValue());
     }
 }

@@ -2,6 +2,7 @@ package com.demo.aadharservice.config;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Sets;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 
 @Configuration
+@Generated
 @EnableSwagger2
 @ComponentScan("com.demo.aadharservice.config")
 public class SwaggerConfig implements WebMvcConfigurer {

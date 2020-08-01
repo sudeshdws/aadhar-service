@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@RequestMapping("api/v1/aadhar-service")
+@RequestMapping("api/v1/aadhar-service/aadhar-cards")
 @Api(value = "aadhar-services", tags = "aadhar-services", description = "This service maintain's the aadhar record ")
 public interface UserAadharControllerAPI {
 
@@ -17,12 +17,10 @@ public interface UserAadharControllerAPI {
             notes = "Generate the aadhar ID", response = User.class,tags = {"Initiate",})
     @ApiResponses(value = {
     @ApiResponse(code = 201, message = "Successful Enrollment of Aadhar", response = User.class)})
-    @RequestMapping(value = "/aadhar-enrollment/initiation",
-            produces = {"application/json"},
-            method = RequestMethod.POST)
+    @PostMapping()
     ResponseEntity<User> enrollUserInfoToAdhar(
             @ApiParam(value = "User Aaadhar Information Request Payload", required = true)
-            @Valid @RequestBody User body);
+            @Valid @RequestBody User user);
 
 
 
@@ -30,21 +28,18 @@ public interface UserAadharControllerAPI {
             notes = " Update Aadhar information", response = User.class,tags = {"Update",})
     @ApiResponses(value = {
     @ApiResponse(code = 200, message = "User aadhar information is successfully updated", response = User.class)})
-    @RequestMapping(value = "/aadhar-update",
-                produces = {"application/json"},
-                method = RequestMethod.PUT)
+    @PutMapping("/{aadhar-id}")
     ResponseEntity<User> updateUserInfoToAdhar(
                 @ApiParam(value = "User Aaadhar Information Request Payload", required = true)
-                @Valid @RequestBody User body);
+                @Valid @RequestBody User user,
+                @Valid @PathVariable("aadhar-id") Long id);
 
 
     @ApiOperation(value = "Retrieve  user aadhar information", nickname = "Get aadhar information",
             notes = " Retrieve aadhar information", response = User.class,tags = {"Search",})
     @ApiResponses(value = {
     @ApiResponse(code = 200, message = "User aadhar information is successfully retrieved", response = User.class)})
-    @RequestMapping(value = "/aadhar-retrieve/{aadhar-id}",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
+    @GetMapping("/{aadhar-id}")
     ResponseEntity<Optional<User>> getUserAadharInfo(
             @ApiParam(value = "user aadhar-id", required = true)
             @Valid @PathVariable("aadhar-id") Long id);
@@ -54,10 +49,8 @@ public interface UserAadharControllerAPI {
             notes = " Delete aadhar information of user", response = User.class,tags = {"Delete",})
     @ApiResponses(value = {
     @ApiResponse(code = 200, message = "User aadhar information is successfully deleted", response = User.class)})
-    @RequestMapping(value = "/aadhar-delete/{aadhar-id}",
-            produces = {"application/json"},
-            method = RequestMethod.DELETE)
-    ResponseEntity<?>  deleteUserAadharInfo(
+    @DeleteMapping("/{aadhar-id}")
+    ResponseEntity  deleteUserAadharInfo(
             @ApiParam(value = " user aadhar-id", required = true)
             @Valid @PathVariable("aadhar-id") Long id);
 
@@ -67,9 +60,7 @@ public interface UserAadharControllerAPI {
             notes = " Search Aadhar information", response = User.class,tags = {"Search",})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Retrieve user information", response = User.class)})
-    @RequestMapping(value = "/aadhar-filter",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
+    @GetMapping("/aadhar-filters")
     ResponseEntity<List<User>>  searchUserAadharInfo(
             @ApiParam(value = "Query for search user aadhar records")
             @RequestParam( required = false) Long id,  //.value = "aadhar-id",

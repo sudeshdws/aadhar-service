@@ -4,17 +4,13 @@ import com.demo.aadharservice.model.User;
 import com.demo.aadharservice.service.UserAadharService;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,30 +38,31 @@ public class UserAadharControllerTest {
     public void updateUserInfoToAdharTest() {
         User response = userAadharResponse();
         User request = userAadharRequest();
-        Mockito.when(userAadharService.updateUserInfoToAdhar(request))
+        Long id = 123234343432L;
+        Mockito.when(userAadharService.updateUserInfoToAdhar(request, id))
                 .thenReturn(response);
         ResponseEntity<User> actual = userAadharController.
-                updateUserInfoToAdhar(request);
+                updateUserInfoToAdhar(request, id);
         Assert.assertEquals(200, actual.getStatusCodeValue());
     }
 
     @Test
     public void getUserAadharInfoTest() {
         User response = userAadharResponse();
-        Long val = 20L;
-        Mockito.when(userAadharService.getUserAadharInfo(val))
+        Long id = 123234343432L;
+        Mockito.when(userAadharService.getUserAadharInfo(id))
                 .thenReturn(Optional.of(response));
         ResponseEntity<Optional<User>> actual = userAadharController.
-                getUserAadharInfo(val);
+                getUserAadharInfo(id);
         Assert.assertEquals(200, actual.getStatusCodeValue());
         Assert.assertEquals("John", actual.getBody().get().getFirstName());
     }
 
     @Test
     public void deleteUserAadharInfoTest() {
-        Long val = 20L;
-        Mockito.doNothing().when(userAadharService).deleteUserAadharInfo(val);
-        ResponseEntity<?> actual = userAadharController.deleteUserAadharInfo(val);
+        Long id = 123234343432L;
+        Mockito.doNothing().when(userAadharService).deleteUserAadharInfo(id);
+        ResponseEntity<?> actual = userAadharController.deleteUserAadharInfo(id);
         Assert.assertEquals(204, actual.getStatusCodeValue());
     }
 
@@ -85,23 +82,24 @@ public class UserAadharControllerTest {
     }
 
     private User userAadharResponse() {
+
         User userAadhar = new User();
-        userAadhar.setId(1);
+        userAadhar.setId(123234343432L);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
-        userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setDateOfBirth("1987-11-11");
         userAadhar.setCity("Washington");
         return userAadhar;
     }
 
     private User userAadharRequest() {
         User userAadhar = new User();
-        userAadhar.setId(2);
+        userAadhar.setId(123234343432L);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
-        userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setDateOfBirth("1987-11-11");
         userAadhar.setCity("Washington");
         return userAadhar;
     }
@@ -109,19 +107,19 @@ public class UserAadharControllerTest {
     private List<User> userAadharResponseList() {
         List<User> list = new ArrayList<>();
         User user1 = new User();
-        user1.setId(1);
+        user1.setId(123234343432L);
         user1.setFirstName("John");
         user1.setLastName("Doe");
         user1.setContactNumber("4343434343");
-        user1.setDateOfBirth("2020-07-14");
+        user1.setDateOfBirth("1987-11-11");
         user1.setCity("Washington");
 
         User user2 = new User();
-        user2.setId(2);
+        user2.setId(123234343432L);
         user2.setFirstName("John");
         user2.setLastName("Doe");
         user2.setContactNumber("4343434343");
-        user2.setDateOfBirth("2020-07-14");
+        user2.setDateOfBirth("1987-11-11");
         user2.setCity("Washington");
         list.add(user1);
         list.add(user2);

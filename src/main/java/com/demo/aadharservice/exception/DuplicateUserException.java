@@ -3,10 +3,10 @@ package com.demo.aadharservice.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class UserNotFoundException  extends RuntimeException{
+@ResponseStatus(value = HttpStatus.CONFLICT)
+public class DuplicateUserException extends RuntimeException {
 
-    public UserNotFoundException(String message) {
+    public DuplicateUserException(String message) {
         super(message);
     }
 }

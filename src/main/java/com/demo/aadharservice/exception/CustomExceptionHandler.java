@@ -1,5 +1,6 @@
 package com.demo.aadharservice.exception;
 
+import lombok.Generated;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -7,12 +8,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Generated
 @ControllerAdvice
 public class CustomExceptionHandler {
 
@@ -41,30 +41,15 @@ public class CustomExceptionHandler {
     public final ResponseEntity<Object> userNotFoundException(UserNotFoundException ex) {
         FieldErrorMessage errorDetails = new FieldErrorMessage("ID"
                 , ex.getMessage());
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CustomValidationException.class)
-    public final ResponseEntity<Object> customValidationException(CustomValidationException ex) {
-        FieldErrorMessage errorDetails = new FieldErrorMessage("Name"
+    @ExceptionHandler(DuplicateUserException.class)
+    public final ResponseEntity<Object> DuplicateUserException(DuplicateUserException ex) {
+        FieldErrorMessage errorDetails = new FieldErrorMessage(""
                 , ex.getMessage());
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
-
-    @ExceptionHandler(ContactValidationException.class)
-    public final ResponseEntity<Object> contactValidationException(ContactValidationException ex) {
-        FieldErrorMessage errorDetails = new FieldErrorMessage("ContactNumber"
-                , ex.getMessage());
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(CityValidationException.class)
-    public final ResponseEntity<Object> cityValidationException(CityValidationException ex) {
-        FieldErrorMessage errorDetails = new FieldErrorMessage("City"
-                , ex.getMessage());
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
 
 }
 

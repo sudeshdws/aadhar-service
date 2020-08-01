@@ -13,12 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.util.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,9 +31,8 @@ class UserAadharServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Test
-    void enrollUserInfoToAdharTest() {
+    void enrollUserInfoToAdharTest() throws ParseException {
         User request = userAadharRequest();
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.save(request)).thenReturn(response);
@@ -46,18 +41,20 @@ class UserAadharServiceTest {
         Assert.assertEquals(request.getLastName(), userAadharResp.getLastName());
     }
 
+
     @Test
-    void updateUserInfoToAdharTest() {
+    void updateUserInfoToAdharTest() throws ParseException {
+        Long id = 123234343432L;
         User request = userAadharRequest();
-        Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(true);
-        User finalResp = userAadharService.updateUserInfoToAdhar(request);
+        Mockito.when(userAadharRepository.existsById(id)).thenReturn(true);
+        User finalResp = userAadharService.updateUserInfoToAdhar(request,id);
         Assert.assertEquals(request.getFirstName(), finalResp.getFirstName());
         Assert.assertEquals(request.getLastName(), finalResp.getLastName());
         Assert.assertNotEquals("232323", finalResp.getContactNumber());
     }
 
     @Test
-    void getUserAadharInfo() {
+    void getUserAadharInfo() throws ParseException {
         User request = userAadharRequest();
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.findById(request.getId())).thenReturn(Optional.of(response));
@@ -67,28 +64,29 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void deleteUserAadharInfoTest() {
+    void deleteUserAadharInfoTest() throws ParseException {
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(true);
         userAadharService.deleteUserAadharInfo(request.getId());
         Mockito.verify(userAadharRepository).deleteById(request.getId());
     }
 
-
     @Test
-    void updateUserInfoToAdharExceptionTest() {
+    void updateUserInfoToAdharExceptionTest() throws ParseException {
+
         User request = userAadharRequest();
+        Long id = 123234343432L;
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
         Assertions.assertThrows(UserNotFoundException.class, () -> {
-            userAadharService.updateUserInfoToAdhar(request);
+            userAadharService.updateUserInfoToAdhar(request,id);
         });
     }
 
 
     @Test
-    void getUserAadharInfoIfUserAadharIdNotFound() {
-        Long id = 233232222L;
+    void getUserAadharInfoIfUserAadharIdNotFound() throws ParseException {
         User request = userAadharRequest();
+        Long id = 123234343432L;
         Mockito.when(userAadharRepository.findById(request.getId())).thenReturn(Optional.empty());
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(true);
         Assertions.assertThrows(UserNotFoundException.class, () -> {
@@ -97,7 +95,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void deleteUserAadharInfoIfUserNotFoundTest() {
+    void deleteUserAadharInfoIfUserNotFoundTest() throws ParseException {
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
         Assertions.assertThrows(UserNotFoundException.class, () -> {
@@ -106,7 +104,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void dateParseFunctionTest() {
+    void dateParseFunctionTest() throws ParseException {
         User request = userAadharRequest();
         request.setDateOfBirth("4242423333");
         Assertions.assertThrows(DateParseException.class, () -> {
@@ -115,135 +113,57 @@ class UserAadharServiceTest {
         });
     }
 
-
     @Test
-    void searchUserAadharInfoTest() {
+    void searchUserAadharInfoTest() throws ParseException {
         List<User> responseList = userAadharResponseList();
-        Long id = 123232222L;
+        Long id = 123234343432L;
         String firstName = "John";
         String lastName = "Doe";
         String dateOfBirth = "2020-07-14";
-        Mockito.when(userAadharRepository.findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(
+       Mockito.when(userAadharRepository.findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(
                 id, firstName, lastName, dateOfBirth)).thenReturn(responseList);
         List<User> responseLists = userAadharService.searchUserAadharInfo(id, firstName, lastName, dateOfBirth);
         Assert.assertEquals(responseList.size(), responseLists.size());
         Assert.assertEquals(responseList.get(1).getFirstName(), responseLists.get(1).getFirstName());
     }
 
-    @Test
-    void contactvalidationExceptionTest() {
-        User request = userContactValidateRequest();
-        Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
-        Assertions.assertThrows(ContactValidationException.class, () -> {
-            userAadharService.updateUserInfoToAdhar(request);
-        });
-    }
-
-    @Test
-    void userLastNameValidationExceptionTest() {
-        User request = userFirstNameValidationData();
-        Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
-        Assertions.assertThrows(CustomValidationException.class, () -> {
-            userAadharService.updateUserInfoToAdhar(request);
-        });
-    }
-
-    @Test
-    void userLstNameValidationExceptionTest() {
-        User request = userLastNameValidationData();
-        Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
-        Assertions.assertThrows(CustomValidationException.class, () -> {
-            userAadharService.updateUserInfoToAdhar(request);
-        });
-    }
-
-    @Test
-    void userCityValidationExceptionTest() {
-        User request = userCityValidationData();
-        Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
-        Assertions.assertThrows(CustomValidationException.class, () -> {
-            userAadharService.updateUserInfoToAdhar(request);
-        });
-    }
-
-    private User userContactValidateRequest() {
-        User userAadhar = new User();
-        userAadhar.setId(1);
-        userAadhar.setFirstName("John");
-        userAadhar.setLastName("Doe");
-        userAadhar.setContactNumber("4343@43434");
-        userAadhar.setDateOfBirth("2020-07-14");
-        userAadhar.setCity("Washington");
-        return userAadhar;
-    }
-
-    private User userFirstNameValidationData() {
-        User userAadhar = new User();
-        userAadhar.setId(1);
-        userAadhar.setFirstName("John@");
-        userAadhar.setLastName("Doe");
-        userAadhar.setContactNumber("434343434");
-        userAadhar.setDateOfBirth("2020-07-14");
-        userAadhar.setCity("Washington");
-        return userAadhar;
-    }
-    private User userLastNameValidationData() {
-        User userAadhar = new User();
-        userAadhar.setId(1);
-        userAadhar.setFirstName("John");
-        userAadhar.setLastName("Doe###");
-        userAadhar.setContactNumber("434343434A");
-        userAadhar.setDateOfBirth("2020-07-14");
-        userAadhar.setCity("Washington");
-        return userAadhar;
-    }
-    private User userCityValidationData() {
-        User userAadhar = new User();
-        userAadhar.setId(1);
-        userAadhar.setFirstName("John");
-        userAadhar.setLastName("Doe");
-        userAadhar.setContactNumber("434343434");
-        userAadhar.setDateOfBirth("2020-07-14");
-        userAadhar.setCity("Washington#");
-        return userAadhar;
-    }
     private User userAadharRequest() {
         User userAadhar = new User();
-        userAadhar.setId(1);
+        userAadhar.setId(123234345456L);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("434343434");
-        userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setDateOfBirth("1989-11-11");
         userAadhar.setCity("Washington");
         return userAadhar;
     }
 
     private User userAadharResponse() {
         User userAadhar = new User();
-        userAadhar.setId(1);
+        userAadhar.setId(123234345456L);
         userAadhar.setFirstName("John");
         userAadhar.setLastName("Doe");
         userAadhar.setContactNumber("4343434343");
-        userAadhar.setDateOfBirth("2020-07-14");
+        userAadhar.setDateOfBirth("1989-11-11");
         return userAadhar;
     }
 
     private List<User> userAadharResponseList() {
         List<User> list = new ArrayList<>();
         User userAadhar1 = new User();
-        userAadhar1.setId(1);
+        userAadhar1.setId(123234345456L);
         userAadhar1.setFirstName("John");
         userAadhar1.setLastName("Doe");
         userAadhar1.setContactNumber("4343434343");
-        userAadhar1.setDateOfBirth("2020-07-14");
+        userAadhar1.setDateOfBirth("1989-11-11");
         userAadhar1.setCity("Washington");
 
         User userAadhar2 = new User();
-        userAadhar2.setId(2);
+        userAadhar2.setId(123234345456L);
         userAadhar2.setFirstName("John");
         userAadhar2.setLastName("Doe");
         userAadhar2.setContactNumber("4343434343");
-        userAadhar2.setDateOfBirth("2020-07-14");
+        userAadhar2.setDateOfBirth("1989-11-11");
         userAadhar2.setCity("Washington");
 
         list.add(userAadhar1);
@@ -255,25 +175,24 @@ class UserAadharServiceTest {
     @Test
     public void testUserClass() {
         User user = new User();
-        user.setId(2);
+        user.setId(123234345456L);
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setContactNumber("4343434343");
-        user.setDateOfBirth("2020-07-14");
+        user.setDateOfBirth("1989-11-11");
         user.setCity("Washington");
-        Assert.assertEquals(2, user.getId());
         Assert.assertEquals("John", user.getFirstName());
         Assert.assertEquals("Doe", user.getLastName());
         Assert.assertEquals("4343434343", user.getContactNumber());
-        Assert.assertEquals("2020-07-14", user.getDateOfBirth());
+        Assert.assertEquals("1989-11-11", user.getDateOfBirth());
         Assert.assertEquals("Washington", user.getCity());
 
         User user1 = new User();
-        user1.setId(2);
+        user1.setId(123234345456L);
         user1.setFirstName("John");
         user1.setLastName("Doe");
         user1.setContactNumber("4343434343");
-        user1.setDateOfBirth("2020-07-14");
+        user1.setDateOfBirth("1989-11-11");
         user1.setCity("Washington");
 
         Assert.assertEquals(user.getId(), user1.getId());
@@ -316,6 +235,7 @@ class UserAadharServiceTest {
         Assert.assertEquals("Test", errorMessages.getStatus());
         Assert.assertEquals("Should be filled", errorMessages.getMessage());
     }
+
 
 }
 
