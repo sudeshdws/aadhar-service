@@ -15,7 +15,7 @@
 
 	<appender name="RollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOGS}/obp-payments-api.log</file>
+		<file>${LOGS}/aadhar-service.log</file>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%magenta(%d) %highlight(%-5level) [%blue(%t)]
@@ -25,7 +25,7 @@
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily and when the file reaches 100 MegaBytes -->
-			<fileNamePattern>${LOGS}/archived/consent-manager-%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>${LOGS}/archived/aadhar-service-%d{yyyy-MM-dd}.%i.log
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -63,7 +63,7 @@
 		<appender-ref ref="RollingFile" />
 	</logger>
 
-	<logger name="com.wipro.obp" level="debug" additivity="false">
+	<logger name="com.demo.aadharservice" level="debug" additivity="false">
 		<appender-ref ref="RollingFile" />
 	</logger>
 

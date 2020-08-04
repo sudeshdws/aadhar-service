@@ -48,7 +48,7 @@ public interface UserAadharControllerAPI {
     @ApiOperation(value = "Delete  user aadhar information", nickname = "Delete aadhar information",
             notes = " Delete aadhar information of user", response = User.class,tags = {"Delete",})
     @ApiResponses(value = {
-    @ApiResponse(code = 200, message = "User aadhar information is successfully deleted", response = User.class)})
+    @ApiResponse(code = 204, message = "User aadhar information is successfully deleted", response = User.class)})
     @DeleteMapping("/{aadhar-id}")
     ResponseEntity  deleteUserAadharInfo(
             @ApiParam(value = " user aadhar-id", required = true)
@@ -59,11 +59,11 @@ public interface UserAadharControllerAPI {
     @ApiOperation(value = "Search user aadhar information", nickname = "Search aadhar information",
             notes = " Search Aadhar information", response = User.class,tags = {"Search",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Retrieve user information", response = User.class)})
+            @ApiResponse(code = 200, message = "Retrieve user aadhar information", response = User.class)})
     @GetMapping("/aadhar-filters")
     ResponseEntity<List<User>>  searchUserAadharInfo(
             @ApiParam(value = "Query for search user aadhar records")
-            @RequestParam( required = false) Long id,  //.value = "aadhar-id",
+            @RequestParam( required = false) Long id,
             @ApiParam(value = "Query for search user aadhar records")
             @RequestParam(value = "first-name", required = false) String firstName,
             @ApiParam(value = "Query for search user aadhar records")

@@ -12,12 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @Generated
 @ControllerAdvice
 public class CustomExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public final ResponseEntity<Object> handleException(Exception ex, WebRequest request) throws Exception {
+    public final ResponseEntity<Object> handleException(Exception ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         if (ex instanceof MethodArgumentNotValidException) {
@@ -45,8 +46,8 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateUserException.class)
-    public final ResponseEntity<Object> DuplicateUserException(DuplicateUserException ex) {
-        FieldErrorMessage errorDetails = new FieldErrorMessage(""
+    public final ResponseEntity<Object> duplicateUserException(DuplicateUserException ex) {
+        FieldErrorMessage errorDetails = new FieldErrorMessage("FirstName"
                 , ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }

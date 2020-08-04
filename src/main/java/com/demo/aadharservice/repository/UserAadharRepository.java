@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserAadharRepository extends JpaRepository<User, Long> {
 
-   List<User>  findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(Long id, String firstName , String lastName , String DateOfBirth);
+    List<User> findAllByIdOrFirstNameIgnoreCaseOrLastNameIgnoreCaseOrDateOfBirth(Long id, String firstName , String lastName , String DateOfBirth);
 
     boolean existsByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndDateOfBirthAndContactNumber(String firstName , String lastName , String DateOfBirth,String contactNumber);
 

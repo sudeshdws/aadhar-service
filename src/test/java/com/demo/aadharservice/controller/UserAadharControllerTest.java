@@ -17,10 +17,10 @@ import java.util.*;
 public class UserAadharControllerTest {
 
     @InjectMocks
-    UserAadharController userAadharController;
+    private UserAadharController userAadharController;
 
     @Mock
-    UserAadharService userAadharService;
+    private UserAadharService userAadharService;
 
 
     @Test

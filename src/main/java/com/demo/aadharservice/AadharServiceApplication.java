@@ -19,7 +19,6 @@ public class AadharServiceApplication {
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-
 		messageSource.setBasename("classpath:application");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;

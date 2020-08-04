@@ -9,15 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class UserAadharService {
 
-    @Autowired
-    UserAadharRepository userAadharRepository;
-
+    private UserAadharRepository userAadharRepository;
     private static final Logger log = LoggerFactory.getLogger(UserAadharService.class);
 
     @Autowired
@@ -28,13 +27,7 @@ public class UserAadharService {
     public User enrollUserInfoToAdhar(User userAadhar) {
         Utiilty.isValidDate(userAadhar.getDateOfBirth());
         User user = new User();
-        Boolean isExist = userAadharRepository.
-                existsByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndDateOfBirthAndContactNumber(userAadhar.getFirstName(),
-                userAadhar.getLastName(),userAadhar.getDateOfBirth(),userAadhar.getContactNumber());
-
-        if(isExist) throw DuplicateUserException(Utiilty.USER_IS_ALREADY_REGISTERED)
-
-
+        if (isUserExist(userAadhar)) throw new DuplicateUserException(Utiilty.USER_IS_ALREADY_REGISTERED);
         try {
             userAadhar.setId(ThreadLocalRandom.current().nextLong(910000000000L));
             user = userAadharRepository.save(userAadhar);
@@ -42,13 +35,11 @@ public class UserAadharService {
             log.error("Error in enrollUserInfoToAdhar {}", e.getMessage());
         }
         return user;
-
     }
 
     public User updateUserInfoToAdhar(User userAadhar, Long id) {
         log.info("updateUserInfoToAdhar() starts ");
         Utiilty.isValidDate(userAadhar.getDateOfBirth());
-
         if (userAadharRepository.existsById(id)) {
             userAadhar.setId(id);
             userAadharRepository.save(userAadhar);
@@ -56,6 +47,12 @@ public class UserAadharService {
             throw new UserNotFoundException(Utiilty.USER_ID_NOT_FOUND);
         }
         return userAadhar;
+    }
+
+    private boolean isUserExist(User userAadhar) {
+        return userAadharRepository.
+                existsByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndDateOfBirthAndContactNumber(userAadhar.getFirstName(),
+                        userAadhar.getLastName(), userAadhar.getDateOfBirth(), userAadhar.getContactNumber());
     }
 
     public Optional<User> getUserAadharInfo(Long id) {

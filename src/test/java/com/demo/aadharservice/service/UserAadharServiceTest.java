@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import java.text.ParseException;
 import java.util.*;
 
 
@@ -21,10 +20,10 @@ import java.util.*;
 class UserAadharServiceTest {
 
     @Mock
-    UserAadharRepository userAadharRepository;
+    private UserAadharRepository userAadharRepository;
 
     @InjectMocks
-    UserAadharService userAadharService;
+    private UserAadharService userAadharService;
 
     @BeforeEach
     public void init() {
@@ -32,7 +31,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void enrollUserInfoToAdharTest() throws ParseException {
+    void enrollUserInfoToAdharTest() {
         User request = userAadharRequest();
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.save(request)).thenReturn(response);
@@ -43,7 +42,7 @@ class UserAadharServiceTest {
 
 
     @Test
-    void updateUserInfoToAdharTest() throws ParseException {
+    void updateUserInfoToAdharTest() {
         Long id = 123234343432L;
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(id)).thenReturn(true);
@@ -54,7 +53,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void getUserAadharInfo() throws ParseException {
+    void getUserAadharInfo()  {
         User request = userAadharRequest();
         User response = userAadharResponse();
         Mockito.when(userAadharRepository.findById(request.getId())).thenReturn(Optional.of(response));
@@ -64,7 +63,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void deleteUserAadharInfoTest() throws ParseException {
+    void deleteUserAadharInfoTest() {
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(true);
         userAadharService.deleteUserAadharInfo(request.getId());
@@ -72,7 +71,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void updateUserInfoToAdharExceptionTest() throws ParseException {
+    void updateUserInfoToAdharExceptionTest(){
 
         User request = userAadharRequest();
         Long id = 123234343432L;
@@ -83,8 +82,10 @@ class UserAadharServiceTest {
     }
 
 
+
+
     @Test
-    void getUserAadharInfoIfUserAadharIdNotFound() throws ParseException {
+    void getUserAadharInfoIfUserAadharIdNotFound(){
         User request = userAadharRequest();
         Long id = 123234343432L;
         Mockito.when(userAadharRepository.findById(request.getId())).thenReturn(Optional.empty());
@@ -95,7 +96,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void deleteUserAadharInfoIfUserNotFoundTest() throws ParseException {
+    void deleteUserAadharInfoIfUserNotFoundTest() {
         User request = userAadharRequest();
         Mockito.when(userAadharRepository.existsById(request.getId())).thenReturn(false);
         Assertions.assertThrows(UserNotFoundException.class, () -> {
@@ -104,7 +105,22 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void dateParseFunctionTest() throws ParseException {
+    void userAllReadyRegisterTest(){
+        User request = userAadharRequest();
+        Mockito.when(userAadharRepository.
+                existsByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndDateOfBirthAndContactNumber(request.getFirstName(),
+                        request.getLastName(),
+                        request.getDateOfBirth(),
+                        request.getContactNumber())
+              ).thenReturn(true);
+        Assertions.assertThrows(DuplicateUserException.class, () -> {
+            userAadharService.enrollUserInfoToAdhar(request);
+        });
+    }
+
+
+    @Test
+    void dateParseFunctionTest() {
         User request = userAadharRequest();
         request.setDateOfBirth("4242423333");
         Assertions.assertThrows(DateParseException.class, () -> {
@@ -114,7 +130,7 @@ class UserAadharServiceTest {
     }
 
     @Test
-    void searchUserAadharInfoTest() throws ParseException {
+    void searchUserAadharInfoTest() {
         List<User> responseList = userAadharResponseList();
         Long id = 123234343432L;
         String firstName = "John";
