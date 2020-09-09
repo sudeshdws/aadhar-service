@@ -133,7 +133,7 @@
 
 
         </plugins>
-
+        <finalName>aadhar-service</finalName>
     </build>
 
 </project>
