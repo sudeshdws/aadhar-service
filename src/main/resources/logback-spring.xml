@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="LOGS" value="/opt/obp/logs" />
+	<property name="LOGS" value="/home/ubuntu/code/aadhar-service/opt/obp/logs" />
 
 	<appender name="Console"
 		class="ch.qos.logback.core.ConsoleAppender">
