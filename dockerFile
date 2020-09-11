@@ -1,4 +1,0 @@
-FROM openjdk:8
-ADD  target/aadhar-service.jar aadhar-service.jar
-EXPOSE 8086
-ENTRYPOINT ["java","-jar","aadhar-service.jar"]
